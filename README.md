@@ -1,5 +1,3 @@
-# ez_bookmarks
-
 ## The Master Resource Library (50 Entries)
 
 | Category | Tool | URL | Primary Use |
