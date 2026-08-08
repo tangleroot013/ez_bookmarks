@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Master Resource Library 🦆</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: { 500: '#3b82f6', 600: '#2563eb' }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex flex-col font-sans">
+
+  <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <span class="text-3xl">🦆</span>
+        <div>
+          <h1 class="text-xl font-bold text-white tracking-tight">Master Resource Library</h1>
+          <p class="text-xs text-slate-400">65 Hand-picked dev tools, media utilities & productivity sites</p>
+        </div>
+      </div>
+      <div class="w-full sm:w-80">
+        <input 
+          type="text" 
+          id="searchInput" 
+          placeholder="Search 65 tools (e.g., regex, pdf, color)..." 
+          class="w-full bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        >
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 py-6 flex-1 w-full">
+    
+    <div class="flex flex-wrap gap-2 mb-8 justify-center sm:justify-start" id="categoryFilters">
+      <button data-cat="all" class="cat-btn active bg-blue-600 text-white px-3 py-1.5 rounded-full text-xs font-medium transition hover:bg-blue-500">All (65)</button>
+      <button data-cat="Dev & Technical" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1.5 rounded-full text-xs font-medium transition">Dev & Technical</button>
+      <button data-cat="Knowledge & Learning" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1.5 rounded-full text-xs font-medium transition">Knowledge & Learning</button>
+      <button data-cat="Creative & Media" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1.5 rounded-full text-xs font-medium transition">Creative & Media</button>
+      <button data-cat="Productivity & Utils" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1.5 rounded-full text-xs font-medium transition">Productivity & Utils</button>
+      <button data-cat="Security" class="cat-btn bg-slate-800 text-slate-300 hover:bg-slate-700 px-3 py-1.5 rounded-full text-xs font-medium transition">Security</button>
+    </div>
+
+    <div id="resourceGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      </div>
+
+    <div id="noResults" class="hidden text-center py-16 text-slate-500">
+      <p class="text-lg">Quack! No tools matched your search query.</p>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    <p>Maintained with 🦆 by tangleroot013 • Deployed via GitHub Pages</p>
+  </footer>
+
+  <script>
+    const resources = [
+      { id: 1, cat: "Productivity & Utils", name: "12ft Ladder", url: "https://12ft.io", desc: "Bypass paywalls on web articles" },
+      { id: 2, cat: "Knowledge & Learning", name: "LibGen", url: "https://libgen.is", desc: "Millions of free textbooks and literature" },
+      { id: 3, cat: "Knowledge & Learning", name: "Sci-Hub", url: "https://sci-hub.se", desc: "Free research paper repository" },
+      { id: 4, cat: "Productivity & Utils", name: "AlternativeTo", url: "https://alternativeto.net", desc: "Find free software and app alternatives" },
+      { id: 5, cat: "Productivity & Utils", name: "JustWatch", url: "https://justwatch.com", desc: "Find streaming locations for movies and TV shows" },
+      { id: 6, cat: "Knowledge & Learning", name: "Archive.org", url: "https://archive.org", desc: "Access internet history and digital archives" },
+      { id: 7, cat: "Knowledge & Learning", name: "Project Gutenberg", url: "https://gutenberg.org", desc: "70,000+ free classic eBooks" },
+      { id: 8, cat: "Knowledge & Learning", name: "OpenCulture", url: "https://openculture.com", desc: "Free educational courses and cultural media" },
+      { id: 9, cat: "Dev & Technical", name: "WolframAlpha", url: "https://wolframalpha.com", desc: "Computational intelligence for math and science" },
+      { id: 10, cat: "Creative & Media", name: "Photopea", url: "https://photopea.com", desc: "Free full-featured image editor in browser" },
+      { id: 11, cat: "Creative & Media", name: "Squoosh", url: "https://squoosh.app", desc: "Compress and optimize images for free" },
+      { id: 12, cat: "Creative & Media", name: "Remove.bg", url: "https://remove.bg", desc: "Remove image backgrounds automatically" },
+      { id: 13, cat: "Creative & Media", name: "Cleanup.pictures", url: "https://cleanup.pictures", desc: "Erase unwanted objects from photos" },
+      { id: 14, cat: "Creative & Media", name: "Unscreen", url: "https://unscreen.com", desc: "Remove video backgrounds automatically" },
+      { id: 15, cat: "Creative & Media", name: "Carbon", url: "https://carbon.now.sh", desc: "Create beautiful code snippets as images" },
+      { id: 16, cat: "Creative & Media", name: "Ray.so", url: "https://ray.so", desc: "Generate stylish code screenshots" },
+      { id: 17, cat: "Creative & Media", name: "Shots.so", url: "https://shots.so", desc: "Create realistic product and device mockups" },
+      { id: 18, cat: "Creative & Media", name: "Smartmockups", url: "https://smartmockups.com", desc: "Design professional product mockups easily" },
+      { id: 19, cat: "Security", name: "HaveIBeenPwned", url: "https://haveibeenpwned.com", desc: "Check if your email or account has been breached" },
+      { id: 20, cat: "Dev & Technical", name: "Regex101", url: "https://regex101.com", desc: "Regular expression testing and debugging" },
+      { id: 21, cat: "Dev & Technical", name: "CyberChef", url: "https://gchq.github.io/CyberChef/", desc: "Data analysis, transformation, and encoding tool" },
+      { id: 22, cat: "Dev & Technical", name: "JSONLint", url: "https://jsonlint.com", desc: "Validate and format JSON data" },
+      { id: 23, cat: "Knowledge & Learning", name: "Khan Academy", url: "https://khanacademy.org", desc: "Free online courses, lessons, and practice exercises" },
+      { id: 24, cat: "Knowledge & Learning", name: "Duolingo", url: "https://duolingo.com", desc: "Learn languages for free" },
+      { id: 25, cat: "Dev & Technical", name: "Desmos", url: "https://desmos.com", desc: "Free online graphing and scientific calculators" },
+      { id: 26, cat: "Creative & Media", name: "Canva", url: "https://canva.com", desc: "Easy graphic design tool for presentations and posters" },
+      { id: 27, cat: "Dev & Technical", name: "Excalidraw", url: "https://excalidraw.com", desc: "Virtual whiteboard for sketching hand-drawn diagrams" },
+      { id: 28, cat: "Productivity & Utils", name: "Trello", url: "https://trello.com", desc: "Visual project management and organization boards" },
+      { id: 29, cat: "Productivity & Utils", name: "Scribbr", url: "https://scribbr.com", desc: "Free citation generator for APA, MLA, and Chicago styles" },
+      { id: 30, cat: "Productivity & Utils", name: "NaturalReaders", url: "https://naturalreaders.com", desc: "Free text-to-speech reader for web pages and documents" },
+      { id: 31, cat: "Creative & Media", name: "TinyPNG", url: "https://tinypng.com", desc: "Compress PNG and JPEG images efficiently" },
+      { id: 32, cat: "Productivity & Utils", name: "iLovePDF", url: "https://ilovepdf.com", desc: "Merge, split, compress, and convert PDF files online" },
+      { id: 33, cat: "Dev & Technical", name: "Draw.io", url: "https://draw.io", desc: "Free online diagramming and flowchart software" },
+      { id: 34, cat: "Creative & Media", name: "Pixabay", url: "https://pixabay.com", desc: "Free royalty-free stock images, videos, and music" },
+      { id: 35, cat: "Creative & Media", name: "Unsplash", url: "https://unsplash.com", desc: "High-resolution, free stock photos for projects" },
+      { id: 36, cat: "Creative & Media", name: "MyColor.space", url: "https://mycolor.space", desc: "Generate color palettes and gradients easily" },
+      { id: 37, cat: "Knowledge & Learning", name: "PhET", url: "https://phet.colorado.edu", desc: "Interactive math and science simulations" },
+      { id: 38, cat: "Dev & Technical", name: "DevDocs", url: "https://devdocs.io", desc: "Fast, offline-capable API documentation search" },
+      { id: 39, cat: "Dev & Technical", name: "Crontab Guru", url: "https://crontab.guru", desc: "Interactive cron schedule expression editor" },
+      { id: 40, cat: "Dev & Technical", name: "Roadmap.sh", url: "https://roadmap.sh", desc: "Developer learning roadmaps and career paths" },
+      { id: 41, cat: "Dev & Technical", name: "Transform Tools", url: "https://transform.tools", desc: "Convert JSON, CSS, GraphQL, and code formats" },
+      { id: 42, cat: "Dev & Technical", name: "Compiler Explorer", url: "https://godbolt.org", desc: "View compiled assembly code in real time" },
+      { id: 43, cat: "Dev & Technical", name: "Diffchecker", url: "https://diffchecker.com", desc: "Compare text or code files side-by-side" },
+      { id: 44, cat: "Productivity & Utils", name: "Goblin.tools", url: "https://goblin.tools", desc: "AI tools to break down complex tasks" },
+      { id: 45, cat: "Productivity & Utils", name: "Temp Mail", url: "https://temp-mail.org", desc: "Temporary disposable email address generator" },
+      { id: 46, cat: "Productivity & Utils", name: "SuperCook", url: "https://supercook.com", desc: "Find recipes based on ingredients you have" },
+      { id: 47, cat: "Creative & Media", name: "Coolors", url: "https://coolors.co", desc: "Lightning-fast color palette generator" },
+      { id: 48, cat: "Creative & Media", name: "SVGOMG", url: "https://svgomg.net", desc: "Optimize and strip unnecessary code from SVGs" },
+      { id: 49, cat: "Knowledge & Learning", name: "Keybr", url: "https://keybr.com", desc: "Practice touch typing for speed and accuracy" },
+      { id: 50, cat: "Productivity & Utils", name: "Music for Programming", url: "https://musicforprogramming.net", desc: "Curated ambient music for developer focus" },
+      { id: 51, cat: "Productivity & Utils", name: "Linear", url: "https://linear.app", desc: "Lightweight issue tracking for software teams" },
+      { id: 52, cat: "Dev & Technical", name: "Warp", url: "https://warp.dev", desc: "Modern AI-accelerated terminal for developers" },
+      { id: 53, cat: "Dev & Technical", name: "Sentry", url: "https://sentry.io", desc: "Real-time error tracking and performance monitoring" },
+      { id: 54, cat: "Dev & Technical", name: "Mintlify", url: "https://mintlify.com", desc: "Build modern developer documentation from code" },
+      { id: 55, cat: "Dev & Technical", name: "Quicktype", url: "https://quicktype.io", desc: "Convert JSON into typed code for multiple languages" },
+      { id: 56, cat: "Dev & Technical", name: "Bundlephobia", url: "https://bundlephobia.com", desc: "Find the size impact of adding an npm package" },
+      { id: 57, cat: "Creative & Media", name: "Readme.so", url: "https://readme.so", desc: "Interactive markdown builder for GitHub READMEs" },
+      { id: 58, cat: "Creative & Media", name: "Screely", url: "https://screely.com", desc: "Turn screenshots into website window mockups" },
+      { id: 59, cat: "Productivity & Utils", name: "Tables Generator", url: "https://tablesgenerator.com", desc: "Interactive table generator for Markdown, HTML, and LaTeX" },
+      { id: 60, cat: "Dev & Technical", name: "Glitch", url: "https://glitch.com", desc: "Instant browser-based web app building and hosting" },
+      { id: 61, cat: "Knowledge & Learning", name: "Exercism", url: "https://exercism.org", desc: "Code practice and mentorship across 70+ programming languages" },
+      { id: 62, cat: "Security", name: "Shodan", url: "https://shodan.io", desc: "Search engine for internet-connected devices and security" },
+      { id: 63, cat: "Dev & Technical", name: "Web.dev", url: "https://web.dev", desc: "Web performance testing, accessibility, and best practices" },
+      { id: 64, cat: "Productivity & Utils", name: "Lifestack", url: "https://lifestack.ai", desc: "Energy-aware scheduling and deep work protection" },
+      { id: 65, cat: "Creative & Media", name: "Fontjoy", url: "https://fontjoy.com", desc: "AI-powered font pairing generator for designers" }
+    ];
+
+    let currentCategory = 'all';
+    let searchQuery = '';
+
+    const grid = document.getElementById('resourceGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.cat-btn');
+    const noResults = document.getElementById('noResults');
+
+    function render() {
+      grid.innerHTML = '';
+      const filtered = resources.filter(item => {
+        const matchesCategory = currentCategory === 'all' || item.cat === currentCategory;
+        const matchesSearch = item.name.toLowerCase().includes(searchQuery) || 
+                              item.desc.toLowerCase().includes(searchQuery) ||
+                              item.cat.toLowerCase().includes(searchQuery);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        noResults.classList.remove('hidden');
+      } else {
+        noResults.classList.add('hidden');
+        filtered.forEach(item => {
+          const card = document.createElement('a');
+          card.href = item.url;
+          card.target = "_blank";
+          card.rel = "noopener noreferrer";
+          card.className = "block bg-slate-800/50 border border-slate-800 rounded-xl p-5 hover:border-blue-500/50 hover:bg-slate-800 transition duration-200 group";
+          
+          card.innerHTML = `
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-[10px] uppercase font-semibold tracking-wider px-2 py-0.5 rounded bg-slate-700/50 text-slate-300">${item.cat}</span>
+              <span class="text-slate-500 group-hover:text-blue-400 transition">↗</span>
+            </div>
+            <h3 class="font-semibold text-slate-100 group-hover:text-blue-400 transition mb-1">${item.name}</h3>
+            <p class="text-xs text-slate-400 leading-relaxed">${item.desc}</p>
+          `;
+          grid.appendChild(card);
+        });
+      }
+    }
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value.toLowerCase().trim();
+      render();
+    });
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.classList.remove('bg-blue-600', 'text-white', 'active');
+          b.classList.add('bg-slate-800', 'text-slate-300');
+        });
+        btn.classList.remove('bg-slate-800', 'text-slate-300');
+        btn.classList.add('bg-blue-600', 'text-white', 'active');
+        
+        currentCategory = btn.getAttribute('data-cat');
+        render();
+      });
+    });
+
+    render();
+  </script>
+</body>
+</html>
